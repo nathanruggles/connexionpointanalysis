@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Point - Recruitment Performance Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        .kpi-card {
+            transition: all 0.3s ease-in-out;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .funnel-step {
+            clip-path: polygon(0% 0%, 100% 0%, 95% 50%, 100% 100%, 0% 100%, 5% 50%);
+            transition: all 0.3s ease;
+        }
+        .funnel-step:hover {
+            transform: scale(1.02);
+        }
+        .table-sortable th {
+            cursor: pointer;
+        }
+        .table-sortable th:hover {
+            background-color: #e9ebee;
+        }
+        .stoplight-green { background-color: #28a745; color: white; }
+        .stoplight-yellow { background-color: #ffc107; color: #333; }
+        .stoplight-red { background-color: #dc3545; color: white; }
+        
+        .optimizer-card {
+            border-left-width: 4px;
+            transition: all 0.3s ease;
+        }
+        .optimizer-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .title-before {
+            text-decoration: line-through;
+            color: #ef4444; /* red-500 */
+        }
+        .title-after {
+            color: #22c55e; /* green-500 */
+        }
+        .insight-card {
+             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <!-- Header -->
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">Recruitment Performance Review</h1>
+            <p class="text-xl text-gray-600">Client: Connexion Point</p>
+        </header>
+
+        <!-- KPIs Section -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="kpi-card bg-white p-6 rounded-xl shadow-md border border-gray-200"><h3 class="text-sm font-medium text-gray-500">Total Spend</h3><p class="text-3xl font-bold text-indigo-600 mt-2">$22,098.87</p></div>
+            <div class="kpi-card bg-white p-6 rounded-xl shadow-md border border-gray-200"><h3 class="text-sm font-medium text-gray-500">Total Applications (Sponsored)</h3><p class="text-3xl font-bold text-indigo-600 mt-2">3,636</p></div>
+            <div class="kpi-card bg-white p-6 rounded-xl shadow-md border border-gray-200"><h3 class="text-sm font-medium text-gray-500">Avg. Cost Per Application</h3><p class="text-3xl font-bold text-indigo-600 mt-2">$6.08</p></div>
+            <div class="kpi-card bg-white p-6 rounded-xl shadow-md border border-gray-200"><h3 class="text-sm font-medium text-gray-500">Avg. Cost Per Click</h3><p class="text-3xl font-bold text-indigo-600 mt-2">$0.89</p></div>
+        </section>
+
+        <!-- Candidate Funnel Section -->
+        <section class="bg-white p-6 md:p-8 rounded-xl shadow-lg mb-12 border border-gray-200">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">Your Candidate Journey</h2>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-2 text-center text-white">
+                <div class="funnel-step bg-blue-600 w-full md:w-1/4 p-4 rounded-lg"><p class="text-lg font-semibold">Impressions</p><p class="text-3xl font-bold">1,005,753</p></div>
+                <div class="relative w-full md:w-1/4"><div class="funnel-step bg-blue-500 p-4 rounded-lg"><p class="text-lg font-semibold">Clicks</p><p class="text-3xl font-bold">48,973</p></div><div class="absolute -top-4 md:top-1/2 md:-left-10 w-full md:w-auto text-center"><span class="bg-white text-blue-600 text-xs font-bold px-2 py-1 rounded-full shadow-md">5% CTR</span></div></div>
+                <div class="relative w-full md:w-1/4"><div class="funnel-step bg-purple-600 p-4 rounded-lg"><p class="text-lg font-semibold">Apply Starts</p><p class="text-3xl font-bold">9,985</p></div><div class="absolute -top-4 md:top-1/2 md:-left-10 w-full md:w-auto text-center"><span class="bg-white text-purple-600 text-xs font-bold px-2 py-1 rounded-full shadow-md">20% ASR</span></div></div>
+                <div class="relative w-full md:w-1/4"><div class="funnel-step bg-purple-500 p-4 rounded-lg"><p class="text-lg font-semibold">Applications</p><p class="text-3xl font-bold">7,473</p></div><div class="absolute -top-4 md:top-1/2 md:-left-12 w-full md:w-auto text-center"><span class="bg-white text-purple-500 text-xs font-bold px-2 py-1 rounded-full shadow-md">75% Completion</span></div></div>
+            </div>
+        </section>
+
+        <!-- Spend vs Applies Chart Section -->
+        <section class="bg-white p-6 md:p-8 rounded-xl shadow-lg mb-12 border border-gray-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Spend vs. Applications Over Time</h2>
+                <div id="time-toggle" class="flex space-x-2 mt-4 sm:mt-0">
+                    <button id="daily-btn" class="px-4 py-2 text-sm font-semibold bg-indigo-100 text-indigo-700 rounded-md shadow-sm">Daily</button>
+                    <button id="monthly-btn" class="px-4 py-2 text-sm font-semibold bg-gray-200 text-gray-700 rounded-md">Monthly</button>
+                </div>
+            </div>
+            <div class="chart-container"><canvas id="spendAppliesChart"></canvas></div>
+        </section>
+
+        <!-- Per Job Metrics Table Section -->
+        <section class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">Job Performance Breakdown</h2>
+            <div class="overflow-x-auto"><table id="jobs-table" class="min-w-full divide-y divide-gray-200 table-sortable"><thead class="bg-gray-100"><tr><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-sort="job">Job Title</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-sort="location">Location</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-sort="impressions">Impressions</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-sort="clicks">Clicks</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-sort="applies">Applies</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-sort="investment">Investment</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Performance</th></tr></thead><tbody class="bg-white divide-y divide-gray-200"></tbody></table></div>
+        </section>
+
+        <!-- Job Title & Description Optimizer -->
+        <section class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 mb-12">
+            <h2 class="text-2xl font-bold text-gray-900">Job Title & Description Optimizer</h2>
+            <p class="mt-2 text-gray-600">Recommendations to attract more qualified candidates by improving clarity and searchability.</p>
+            <div class="mt-8"><h3 class="text-xl font-bold text-gray-800 mb-4">Job Title Analysis</h3><div id="job-title-optimizer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+            <div class="mt-12"><h3 class="text-xl font-bold text-gray-800 mb-4">Job Description Best Practices</h3><ul class="space-y-4"><li class="flex items-start"><svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><span class="font-semibold">Be Clear and Concise:</span> Clearly outline the role, responsibilities, and expectations.</div></li><li class="flex items-start"><svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><span class="font-semibold">Include Key Qualifications:</span> Specify required licenses, certifications, and experience.</div></li><li class="flex items-start"><svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><span class="font-semibold">Highlight Benefits and Salary:</span> Including salary info attracts more qualified candidates.</div></li><li class="flex items-start"><svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><span class="font-semibold">Use Screener Questions:</span> Jobs with screener questions are 50% more likely to result in a hire.</div></li><li class="flex items-start"><svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><span class="font-semibold">Include Location Details:</span> Be precise about the location or remote options.</div></li><li class="flex items-start"><svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><span class="font-semibold">Use an Engaging Tone:</span> Emphasize growth opportunities and company culture.</div></li></ul></div>
+        </section>
+
+        <!-- Strategic Insights & Recommendations -->
+        <section class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 mb-12">
+            <h2 class="text-2xl font-bold text-gray-900">Strategic Insights & Recommendations</h2>
+            <p class="mt-2 text-gray-600">Leverage market data and ROI-focused KPIs to optimize your recruitment strategy.</p>
+            <div class="mt-8"><h3 class="text-xl font-bold text-gray-800 mb-4">Market Analysis: Cost Per Hire (CPH)</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="bg-gray-50 p-6 rounded-lg border border-gray-200"><h4 class="font-bold text-lg text-teal-600">Moderate Competition Markets</h4><p class="text-sm text-gray-600 mb-3">Sunrise, Phoenix, Atlanta, Jacksonville, Columbus, Philadelphia</p><div class="text-3xl font-bold text-gray-800">$4,500 - $5,500</div><p class="text-sm font-medium text-gray-500">Expected CPH</p></div><div class="bg-gray-50 p-6 rounded-lg border border-gray-200"><h4 class="font-bold text-lg text-red-600">High Competition Markets</h4><p class="text-sm text-gray-600 mb-3">Dallas, Houston</p><div class="text-3xl font-bold text-gray-800">$5,000 - $6,000</div><p class="text-sm font-medium text-gray-500">Expected CPH</p></div></div></div>
+            <div class="mt-12"><h3 class="text-xl font-bold text-gray-800 mb-6">KPI & ROI Tracking Recommendations</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="space-y-6"><div class="flex items-start"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-500 text-white flex items-center justify-center mr-4"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg></div><div><h4 class="text-lg font-bold">Track by Market</h4><p class="text-gray-600">Monitor average CPH city-by-city to identify and address hotspots where costs are above target.</p></div></div><div class="flex items-start"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-500 text-white flex items-center justify-center mr-4"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg></div><div><h4 class="text-lg font-bold">Analyze Channel ROI</h4><p class="text-gray-600">Compare the cost-effectiveness of different sourcing channels like Indeed, employee referrals, and agencies.</p></div></div><div class="flex items-start"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-500 text-white flex items-center justify-center mr-4"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><div><h4 class="text-lg font-bold">Correlate Time-to-Fill with CPH</h4><p class="text-gray-600">A lower time-to-fill not only reduces productivity loss but also directly cuts hiring expenses.</p></div></div></div><div class="bg-gray-50 p-4 rounded-lg border border-gray-200"><p class="text-center font-semibold text-gray-700 mb-2">Example: Channel ROI Analysis</p><div class="chart-container" style="height: 250px;"><canvas id="channelRoiChart"></canvas></div></div></div></div>
+        </section>
+
+        <!-- The True Cost of an Empty Seat -->
+        <section class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 text-center">The True Cost of an Empty Licensed Agent Seat</h2>
+            <p class="mt-2 text-gray-600 text-center max-w-3xl mx-auto">An unfilled role costs more than just a missing team member. It's a direct hit to revenue, productivity, and team morale.</p>
+            
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+                    <h3 class="font-bold text-lg text-red-700">💸 Lost Revenue</h3>
+                    <p class="text-3xl font-bold text-red-900 mt-2">$3,600 - $10,000</p>
+                    <p class="text-sm text-gray-600">in lost net productivity per month.</p>
+                </div>
+                <div class="bg-yellow-50 p-6 rounded-lg border border-yellow-200">
+                    <h3 class="font-bold text-lg text-yellow-700">🧾 Hidden Costs</h3>
+                    <p class="text-3xl font-bold text-yellow-900 mt-2">$1,800 - $3,100</p>
+                    <p class="text-sm text-gray-600">in wasted tools & team impact per month.</p>
+                </div>
+                <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                    <h3 class="font-bold text-lg text-green-700">✅ Total Monthly Cost</h3>
+                    <p class="text-3xl font-bold text-green-900 mt-2">$5,400 - $13,100</p>
+                    <p class="text-sm text-gray-600">is the total estimated cost of one empty seat.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-indigo-50 p-6 rounded-lg text-center border border-indigo-200">
+                <h3 class="text-xl font-bold text-indigo-800">🧠 Strategic Takeaway: The Multiplier Effect</h3>
+                <p class="text-gray-700 mt-2">With <strong class="text-indigo-600">10 open roles</strong>, your company is potentially losing:</p>
+                <p class="text-2xl md:text-3xl font-bold text-indigo-900 mt-2">$65,000 - $85,000 per month</p>
+                <p class="text-lg text-gray-600">That's up to <strong class="text-indigo-600">$1,000,000</strong> annually from unfilled seats.</p>
+            </div>
+        </section>
+
+        <!-- Premium Campaign ROI Calculator -->
+        <section class="bg-gray-50 p-6 md:p-8 rounded-2xl shadow-lg border border-gray-200">
+             <header class="text-center mb-8 md:mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Is a Premium Campaign Worth It?</h2>
+                <p class="mt-3 text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">Calculate the ROI of filling a <strong class="text-indigo-600">Licensed Health Insurance Agent</strong> role faster.</p>
+            </header>
+
+            <main class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <!-- Left Panel: Calculator -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-lg">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-900">ROI Calculator</h3>
+                    <div class="mb-4">
+                        <label for="jobTitle" class="block text-sm font-medium text-gray-700 mb-1">Select Cost Scenario</label>
+                        <select id="jobTitle" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                            <option value="167" data-title="Licensed Agent (Conservative)">Conservative ($5k/mo)</option>
+                            <option value="247" data-title="Licensed Agent (Realistic)" selected>Realistic Average ($7.5k/mo)</option>
+                            <option value="333" data-title="Licensed Agent (Aggressive)">Aggressive Impact ($10k+/mo)</option>
+                            <option value="0" data-title="Custom Scenario">Custom Scenario</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="costUnfilled" class="block text-sm font-medium text-gray-700 mb-1">Cost of Unfilled Role (Per Day)</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">$</span>
+                            <input type="number" id="costUnfilled" value="247" class="w-full pl-7 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label for="premiumCost" class="block text-sm font-medium text-gray-700 mb-1">Premium Campaign Cost (Per Day)</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">$</span>
+                            <input type="number" id="premiumCost" value="60" class="w-full pl-7 p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="timeToFill" class="block text-sm font-medium text-gray-700 mb-1">Estimated Days Saved with Premium</label>
+                        <input type="number" id="timeToFill" value="14" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </div>
+                </div>
+
+                <!-- Right Panel: Results & Visualization -->
+                <div class="lg:col-span-3 bg-white p-6 rounded-2xl shadow-lg">
+                    <h3 class="text-2xl font-bold mb-2 text-gray-900">Your Potential ROI</h3>
+                    <p id="result-job-title" class="text-lg text-indigo-600 font-semibold mb-6">for a Licensed Agent (Realistic)</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 text-center">
+                        <div class="bg-green-50 p-4 rounded-lg"><p class="text-sm text-green-700 font-medium">Net Savings Per Day</p><p id="netSavings" class="text-2xl font-bold text-green-900">$187</p></div>
+                        <div class="bg-indigo-50 p-4 rounded-lg"><p class="text-sm text-indigo-700 font-medium">Daily ROI</p><p id="dailyRoi" class="text-2xl font-bold text-indigo-900">312%</p></div>
+                        <div class="bg-blue-50 p-4 rounded-lg"><p class="text-sm text-blue-700 font-medium">Total Saved</p><p id="totalSavings" class="text-2xl font-bold text-blue-900">$2,618</p></div>
+                    </div>
+                    <div class="w-full h-64 md:h-72"><canvas id="premiumRoiChart"></canvas></div>
+                </div>
+            </main>
+        </section>
+
+
+        <footer class="text-center mt-12 text-gray-500 text-sm">
+            <p>Report Generated on <span id="report-date"></span>.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- Data ---
+        const dailyData = { labels: ['06/13', '06/15', '06/17', '06/19', '06/21', '06/23', '06/25', '06/27', '06/29', '07/01', '07/03', '07/05', '07/07', '07/09'], datasets: [{ label: 'Spend ($)', data: [650, 750, 200, 1000, 1700, 1800, 1100, 1300, 500, 1800, 500, 250, 800, 650], borderColor: 'rgb(192, 132, 252)', backgroundColor: 'rgba(192, 132, 252, 0.5)', yAxisID: 'y', tension: 0.4, }, { label: 'Applies', data: [70, 80, 110, 80, 100, 150, 115, 90, 250, 180, 40, 50, 90, 70], borderColor: 'rgb(59, 130, 246)', backgroundColor: 'rgba(59, 130, 246, 0.5)', yAxisID: 'y1', tension: 0.4, }] };
+        const monthlyData = { labels: ['06/09', '06/16', '06/23', '06/30', '07/07'], datasets: [{ label: 'Spend ($)', data: [1800, 6800, 7000, 5500, 3000], borderColor: 'rgb(192, 132, 252)', backgroundColor: 'rgba(192, 132, 252, 0.5)', yAxisID: 'y', tension: 0.4, }, { label: 'Applies', data: [300, 950, 1100, 900, 600], borderColor: 'rgb(59, 130, 246)', backgroundColor: 'rgba(59, 130, 246, 0.5)', yAxisID: 'y1', tension: 0.4, }] };
+        const jobData = [ { job: 'Licensed Health Insurance Agent', location: 'Dallas, TX', impressions: 49007, clicks: 527, applies: 355, investment: 2305.17, status: 'green' }, { job: 'Licensed Health Insurance Agent - Medicare DSNP Remote', location: 'Remote', impressions: 15100, clicks: 177, applies: 122, investment: 722.28, status: 'green' }, { job: 'Licensed Health Insurance Agent', location: 'Atlanta, GA', impressions: 37407, clicks: 440, applies: 294, investment: 2181.87, status: 'green' }, { job: 'Health Insurance Agent ACA', location: 'Remote', impressions: 34251, clicks: 451, applies: 280, investment: 2253.11, status: 'yellow' }, { job: 'Licensed Health Insurance Agent', location: 'Columbus, OH', impressions: 31829, clicks: 381, applies: 218, investment: 2445.37, status: 'yellow' }, { job: 'Licensed Health Insurance Agent', location: 'Grand Prairie, TX', impressions: 25731, clicks: 301, applies: 257, investment: 1206.00, status: 'green' }, { job: 'Agent - DSNP', location: 'Remote', impressions: 22345, clicks: 250, applies: 150, investment: 1125.00, status: 'yellow' }, { job: 'Licensed Health Insurance Agent', location: 'Phoenix, AZ', impressions: 11214, clicks: 236, applies: 36, investment: 2472.28, status: 'red' }, ];
+        const jobTitleData = [ { current: "Licensed Health Insurance Agent - W2 Position!", suggested: "Licensed Health Insurance Agent", rationale: [ "Removed internal term 'W2 Position!' and exclamation mark for a cleaner, more professional title.", "Focuses on the core, searchable keywords." ], location: "Columbus, OH" }, { current: "Licensed Health Insurance Agent - Medicare DSNP", suggested: "Licensed Medicare Insurance Agent - DSNP", rationale: [ "Title is already strong.", "Simplified to focus on core role and specialization for better searchability." ], location: "Remote" }, { current: "Licensed Health Insurance Agent - W2 Position!", suggested: "Licensed Health Insurance Agent - Remote", rationale: [ "Removed internal jargon 'W2 Position!'.", "Kept 'Remote' in the title for better visibility in remote job searches." ], location: "Remote" } ];
+
+        // --- ROI CALCULATOR SCRIPT ---
+        const jobTitleSelect = document.getElementById('jobTitle');
+        const costUnfilledInput = document.getElementById('costUnfilled');
+        const premiumCostInput = document.getElementById('premiumCost');
+        const timeToFillInput = document.getElementById('timeToFill');
+        const resultJobTitle = document.getElementById('result-job-title');
+        const netSavingsDisplay = document.getElementById('netSavings');
+        const dailyRoiDisplay = document.getElementById('dailyRoi');
+        const totalSavingsDisplay = document.getElementById('totalSavings');
+        const premiumCtx = document.getElementById('premiumRoiChart').getContext('2d');
+        let premiumRoiChart;
+
+        const premiumChartConfig = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    { label: 'Cumulative Vacancy Cost', data: [], borderColor: 'rgba(239, 68, 68, 0.8)', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.4 },
+                    { label: 'Cumulative Premium Campaign Cost', data: [], borderColor: 'rgba(79, 70, 229, 0.8)', backgroundColor: 'rgba(79, 70, 229, 0.1)', fill: true, tension: 0.4 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, ticks: { callback: function(value) { return '$' + value.toLocaleString(); } } },
+                    x: { title: { display: true, text: 'Days' } }
+                },
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: { mode: 'index', intersect: false, callbacks: { label: function(context) { let label = context.dataset.label || ''; if (label) { label += ': '; } if (context.parsed.y !== null) { label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y); } return label; } } }
+                },
+                interaction: { mode: 'index', intersect: false },
+            }
+        };
+
+        function updateCalculator() {
+            const costUnfilled = parseFloat(costUnfilledInput.value) || 0;
+            const premiumCost = parseFloat(premiumCostInput.value) || 0;
+            const daysSaved = parseInt(timeToFillInput.value) || 0;
+            const selectedOption = jobTitleSelect.options[jobTitleSelect.selectedIndex];
+            const jobTitleText = selectedOption.dataset.title;
+            resultJobTitle.textContent = `for a ${jobTitleText}`;
+            const netSavingsPerDay = costUnfilled - premiumCost;
+            const dailyRoi = premiumCost > 0 ? (netSavingsPerDay / premiumCost) * 100 : 0;
+            const totalSavings = netSavingsPerDay * daysSaved;
+            netSavingsDisplay.textContent = netSavingsPerDay.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            dailyRoiDisplay.textContent = `${dailyRoi.toFixed(0)}%`;
+            totalSavingsDisplay.textContent = totalSavings.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            const labels = [];
+            const vacancyCostData = [];
+            const premiumCostData = [];
+            const maxDays = Math.max(daysSaved, 1) + 6;
+            for (let i = 0; i <= maxDays; i++) {
+                labels.push(`${i}`);
+                vacancyCostData.push(costUnfilled * i);
+                premiumCostData.push(premiumCost * i);
+            }
+            premiumRoiChart.data.labels = labels;
+            premiumRoiChart.data.datasets[0].data = vacancyCostData;
+            premiumRoiChart.data.datasets[1].data = premiumCostData;
+            premiumRoiChart.update();
+        }
+
+        jobTitleSelect.addEventListener('change', (e) => {
+            const selectedValue = e.target.value;
+            if (selectedValue !== "0") {
+                costUnfilledInput.value = selectedValue;
+                costUnfilledInput.disabled = true;
+            } else {
+                costUnfilledInput.disabled = false;
+                costUnfilledInput.focus();
+            }
+            updateCalculator();
+        });
+        costUnfilledInput.addEventListener('input', updateCalculator);
+        premiumCostInput.addEventListener('input', updateCalculator);
+        timeToFillInput.addEventListener('input', updateCalculator);
+
+        // --- INITIALIZATION ON PAGE LOAD ---
+        window.addEventListener('load', () => {
+            // --- Spend vs Applies Chart Logic ---
+            const ctx = document.getElementById('spendAppliesChart').getContext('2d');
+            let spendAppliesChart = new Chart(ctx, { type: 'line', data: dailyData, options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false, }, scales: { y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Spend ($)', color: 'rgb(192, 132, 252)' } }, y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Applies', color: 'rgb(59, 130, 246)' }, grid: { drawOnChartArea: false }, }, }, plugins: { tooltip: { backgroundColor: '#FFF', titleColor: '#333', bodyColor: '#666', borderColor: '#DDD', borderWidth: 1, padding: 10, displayColors: true, } } } });
+            const dailyBtn = document.getElementById('daily-btn');
+            const monthlyBtn = document.getElementById('monthly-btn');
+            dailyBtn.addEventListener('click', () => { spendAppliesChart.data = dailyData; spendAppliesChart.update(); dailyBtn.classList.add('bg-indigo-100', 'text-indigo-700'); dailyBtn.classList.remove('bg-gray-200', 'text-gray-700'); monthlyBtn.classList.add('bg-gray-200', 'text-gray-700'); monthlyBtn.classList.remove('bg-indigo-100', 'text-indigo-700'); });
+            monthlyBtn.addEventListener('click', () => { spendAppliesChart.data = monthlyData; spendAppliesChart.update(); monthlyBtn.classList.add('bg-indigo-100', 'text-indigo-700'); monthlyBtn.classList.remove('bg-gray-200', 'text-gray-700'); dailyBtn.classList.add('bg-gray-200', 'text-gray-700'); dailyBtn.classList.remove('bg-indigo-100', 'text-indigo-700'); });
+            
+            // --- Job Table Logic ---
+            const tableBody = document.querySelector('#jobs-table tbody');
+            function populateTable(data) { tableBody.innerHTML = ''; data.forEach(job => { const statusClass = `stoplight-${job.status}`; const row = `<tr class="hover:bg-gray-50"><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${job.job}</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${job.location}</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${job.impressions.toLocaleString()}</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${job.clicks.toLocaleString()}</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-semibold">${job.applies.toLocaleString()}</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$${job.investment.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td><td class="px-6 py-4 whitespace-nowrap text-sm text-center"><span class="px-3 py-1 text-xs font-semibold rounded-full ${statusClass}">${job.status.charAt(0).toUpperCase() + job.status.slice(1)}</span></td></tr>`; tableBody.innerHTML += row; }); }
+            populateTable(jobData);
+            document.querySelectorAll('.table-sortable th').forEach(headerCell => { headerCell.addEventListener('click', () => { const table = headerCell.closest('table'); const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell); const currentIsAscending = headerCell.classList.contains('th-sort-asc'); sortTableByColumn(table, headerIndex, !currentIsAscending); }); });
+            function sortTableByColumn(table, columnIndex, ascending = true) { const dirModifier = ascending ? 1 : -1; const tBody = table.tBodies[0]; const rows = Array.from(tBody.querySelectorAll('tr')); const sortedRows = rows.sort((a, b) => { let aColText = a.querySelector(`td:nth-child(${columnIndex + 1})`).textContent.trim(); let bColText = b.querySelector(`td:nth-child(${columnIndex + 1})`).textContent.trim(); const aNum = parseFloat(aColText.replace(/[^0-9.-]+/g,"")); const bNum = parseFloat(bColText.replace(/[^0-9.-]+/g,"")); if (!isNaN(aNum) && !isNaN(bNum)) { return (aNum > bNum ? 1 : -1) * dirModifier; } else { return aColText.localeCompare(bColText) * dirModifier; } }); while (tBody.firstChild) { tBody.removeChild(tBody.firstChild); } tBody.append(...sortedRows); table.querySelectorAll('th').forEach(th => th.classList.remove('th-sort-asc', 'th-sort-desc')); table.querySelector(`th:nth-child(${columnIndex + 1})`).classList.toggle('th-sort-asc', ascending); table.querySelector(`th:nth-child(${columnIndex + 1})`).classList.toggle('th-sort-desc', !ascending); }
+            
+            // --- Job Title Optimizer Logic ---
+            const optimizerContainer = document.getElementById('job-title-optimizer');
+            function populateOptimizer(data) { optimizerContainer.innerHTML = ''; data.forEach(item => { const rationaleItems = item.rationale.map(r => `<li class="text-xs text-gray-600">${r}</li>`).join(''); const card = `<div class="optimizer-card bg-white p-5 rounded-lg shadow-sm border-l-4 border-indigo-500"><p class="text-sm font-medium text-gray-500">${item.location}</p><div class="mt-2"><p class="text-md font-semibold title-before">${item.current}</p><p class="text-md font-bold title-after mt-1">${item.suggested}</p></div><div class="mt-4 pt-3 border-t border-gray-200"><p class="text-xs font-semibold text-gray-700 mb-2">Rationale:</p><ul class="list-disc list-inside space-y-1">${rationaleItems}</ul></div></div>`; optimizerContainer.innerHTML += card; }); }
+            populateOptimizer(jobTitleData);
+
+            // --- Channel ROI Chart Logic ---
+            const channelRoiCtx = document.getElementById('channelRoiChart').getContext('2d');
+            new Chart(channelRoiCtx, { type: 'bar', data: { labels: ['Indeed', 'Referrals', 'Agency'], datasets: [{ label: 'Cost Per Hire ($)', data: [4200, 1500, 7500], backgroundColor: [ 'rgba(59, 130, 246, 0.7)', 'rgba(22, 163, 74, 0.7)', 'rgba(239, 68, 68, 0.7)' ], borderColor: [ 'rgb(59, 130, 246)', 'rgb(22, 163, 74)', 'rgb(239, 68, 68)' ], borderWidth: 1 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Cost Per Hire ($)' } } }, plugins: { legend: { display: false } } } });
+
+            // --- Premium ROI Calculator Init ---
+            premiumRoiChart = new Chart(premiumCtx, premiumChartConfig);
+            costUnfilledInput.disabled = true;  
+            updateCalculator();
+
+            // --- Set Report Date ---
+            document.getElementById('report-date').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        });
+    </script>
+</body>
+</html>
+
